@@ -1,0 +1,105 @@
+﻿<UserControl x:Class="LibraryManagementSystem.Views.BookDetailView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="White">
+
+    <Grid Margin="30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Margin="0,0,0,30">
+            <Button Command="{Binding GoBackCommand}" 
+                    Content="⬅ Înapoi la Listă"
+                    Background="Transparent" Foreground="#7F8C8D" BorderThickness="0" 
+                    Cursor="Hand" FontWeight="SemiBold" FontSize="16" HorizontalAlignment="Left"/>
+
+            <Button Command="{Binding EditBookCommand}"
+                    Content="✎ Editează Carte"
+                    Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVis}}"
+                    Style="{StaticResource PrimaryButton}"
+                    HorizontalAlignment="Right"/>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="320"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" Background="White" CornerRadius="10" Height="480" VerticalAlignment="Top" ClipToBounds="True">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="25" Opacity="0.25" ShadowDepth="5" Color="Black"/>
+                </Border.Effect>
+                <Image Source="{Binding SelectedBook.FullImagePath}" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+
+            <StackPanel Grid.Column="1" Margin="50,0,0,0">
+                <Border Background="#1ABC9C" CornerRadius="5" HorizontalAlignment="Left" Padding="12,6" Margin="0,0,0,15">
+                    <TextBlock Text="{Binding SelectedBook.CategoryName}" Foreground="White" FontWeight="Bold" FontSize="12"/>
+                </Border>
+
+                <TextBlock Text="{Binding SelectedBook.Title}" FontSize="38" FontWeight="Bold" Foreground="#2C3E50" TextWrapping="Wrap" LineHeight="46" Margin="0,0,0,8"/>
+                <TextBlock Text="{Binding SelectedBook.Author, StringFormat='de {0}'}" FontSize="22" Foreground="#7F8C8D" Margin="0,0,0,20"/>
+
+                <Border Background="#F9F9F9" CornerRadius="8" Padding="15" Margin="0,0,0,30" HorizontalAlignment="Left">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                            <TextBlock Text="Editura: " FontWeight="Bold" Foreground="#95A5A6"/>
+                            <TextBlock Text="{Binding SelectedBook.Publisher}" FontWeight="SemiBold" Foreground="#34495E" Margin="5,0,15,0"/>
+                            <TextBlock Text="An: " FontWeight="Bold" Foreground="#95A5A6"/>
+                            <TextBlock Text="{Binding SelectedBook.PublishedYear}" FontWeight="SemiBold" Foreground="#34495E" Margin="5,0,0,0"/>
+                        </StackPanel>
+                        <TextBlock Text="{Binding SelectedBook.Isbn, StringFormat='ISBN: {0}'}" FontSize="12" Foreground="#BDC3C7"/>
+                    </StackPanel>
+                </Border>
+
+                <Separator Background="#ECF0F1" Margin="0,0,0,30"/>
+
+                <Grid Margin="0,0,0,30" HorizontalAlignment="Left" Width="400">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="STOC DISPONIBIL" FontSize="11" Foreground="#95A5A6" FontWeight="Bold"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                            <TextBlock Text="{Binding SelectedBook.CurrentStock}" FontSize="28" FontWeight="Bold" Foreground="#2C3E50"/>
+                            <TextBlock Text="{Binding SelectedBook.TotalStock, StringFormat='/ {0}'}" FontSize="16" Foreground="#95A5A6" VerticalAlignment="Bottom" Margin="5,0,0,4"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <Border Grid.Column="1" Width="1" Background="#ECF0F1" Margin="20,5"/>
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="STATUS" FontSize="11" Foreground="#95A5A6" FontWeight="Bold"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                            <Ellipse Width="12" Height="12" Margin="0,0,8,0">
+                                <Ellipse.Style>
+                                    <Style TargetType="Ellipse">
+                                        <Setter Property="Fill" Value="#27ae60"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding SelectedBook.IsAvailable}" Value="False">
+                                                <Setter Property="Fill" Value="#c0392b"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Ellipse.Style>
+                            </Ellipse>
+                            <TextBlock Text="Disponibil" FontSize="18" FontWeight="SemiBold" Foreground="#27ae60" Visibility="{Binding SelectedBook.IsAvailable, Converter={StaticResource BoolToVis}}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+
+                <TextBlock Text="Descriere" FontSize="16" FontWeight="Bold" Foreground="#2C3E50" Margin="0,0,0,10"/>
+                <TextBlock Text="Această carte face parte din colecția bibliotecii noastre." FontSize="15" Foreground="#7F8C8D" TextWrapping="Wrap" LineHeight="24"/>
+
+                <Button Content="Împrumută Această Carte" 
+                        Command="{Binding BorrowCommand}"
+                        Style="{StaticResource PrimaryButton}" 
+                        HorizontalAlignment="Left" Margin="0,40,0,0" Padding="40,15" 
+                        IsEnabled="{Binding SelectedBook.IsAvailable}"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

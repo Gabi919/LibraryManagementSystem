@@ -1,55 +1,94 @@
 ﻿<Window x:Class="LibraryManagementSystem.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:LibraryManagementSystem.Views"
-        mc:Ignorable="d"
-        Title="Library Management System" Height="500" Width="900"
-        WindowStartupLocation="CenterScreen">
+        Title="Library Management System" 
+        Height="650" Width="1100"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize" 
+        UseLayoutRounding="True" SnapsToDevicePixels="True">
 
-    <Grid Margin="15">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
 
-        <TextBlock Grid.Row="0" 
-                   Text="Lista Cărți Disponibile" 
-                   FontSize="24" FontWeight="Bold" 
-                   Margin="0,0,0,15"/>
+        <Style x:Key="MenuButtonStyle" TargetType="Button">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Height" Value="45"/>
+            <Setter Property="Margin" Value="15,5"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" CornerRadius="25" Background="{TemplateBinding Background}" BorderBrush="White" BorderThickness="1">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="White"/>
+                                <Setter Property="Foreground" Value="#2C3E50"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
 
-        <DataGrid Grid.Row="1"
-                  ItemsSource="{Binding Books}"
-                  SelectedItem="{Binding SelectedBook}"
-                  AutoGenerateColumns="False"
-                  CanUserAddRows="False"
-                  IsReadOnly="True"
-                  SelectionMode="Single"
-                  BorderBrush="LightGray" BorderThickness="1">
+    <Window.Background>
+        <ImageBrush ImageSource="https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&amp;w=2690&amp;auto=format&amp;fit=crop" Stretch="UniformToFill" Opacity="1"/>
+    </Window.Background>
 
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding BookId}" Width="50"/>
-                <DataGridTextColumn Header="Titlu" Binding="{Binding Title}" Width="*"/>
-                <DataGridTextColumn Header="Autor" Binding="{Binding Author}" Width="150"/>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-                <DataGridTextColumn Header="Categorie" Binding="{Binding CategoryName}" Width="100"/>
+        <Border Grid.Column="0" Width="260" Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVis}}">
+            <Border.Background>
+                <SolidColorBrush Color="#2C3E50" Opacity="0.95"/>
+            </Border.Background>
 
-                <DataGridTextColumn Header="Stoc" Binding="{Binding CurrentStock}" Width="60"/>
+            <StackPanel Margin="0,40,0,0">
+                <Border Width="80" Height="80" CornerRadius="40" Background="White" Margin="0,0,0,15" HorizontalAlignment="Center">
+                    <TextBlock Text="📚" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,5"/>
+                </Border>
 
-                <DataGridCheckBoxColumn Header="Disponibil" 
-                        Binding="{Binding IsAvailable, Mode=OneWay}" 
-                        Width="80"/>
-            </DataGrid.Columns>
-        </DataGrid>
+                <TextBlock Text="MY LIBRARY" Foreground="White" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,40"/>
 
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0">
+                <Button Content="Acasă" Command="{Binding GoToHomeCommand}" Style="{StaticResource MenuButtonStyle}"/>
+                <Button Content="Lista Cărți" Command="{Binding GoToBooksCommand}" Style="{StaticResource MenuButtonStyle}"/>
+                <Button Content="Cărțile Mele" Command="{Binding GoToMyLoansCommand}" Style="{StaticResource MenuButtonStyle}"/>
 
-            <Button Content="Șterge Cartea Selectată"
-                    Command="{Binding DeleteCommand}"
-                    Background="#FFDDDD" Foreground="Red" BorderBrush="Red"
-                    Padding="15,5" Margin="10,0,0,0" FontWeight="Bold"/>
-        </StackPanel>
+                <Button Content="Rapoarte" 
+                        Command="{Binding GoToReportsCommand}" 
+                        Style="{StaticResource MenuButtonStyle}"
+                        Visibility="{Binding IsUserAdmin, Converter={StaticResource BoolToVis}}"/>
+
+                <Separator Background="White" Opacity="0.3" Margin="20,30"/>
+
+                <Button Content="Deconectare" Command="{Binding LogoutCommand}" Style="{StaticResource MenuButtonStyle}" BorderBrush="#E74C3C" Foreground="#E74C3C">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border" CornerRadius="25" Background="Transparent" BorderBrush="#E74C3C" BorderThickness="1">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#E74C3C"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Column="1" Background="White">
+            <ContentControl Content="{Binding CurrentViewModel}"/>
+        </Border>
     </Grid>
 </Window>

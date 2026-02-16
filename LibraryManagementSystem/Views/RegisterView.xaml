@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="LibraryManagementSystem.Views.RegisterView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="White">
+
+    <Grid>
+        <Border Background="#F8F9FA" Width="450" CornerRadius="15" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="30">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="10" Opacity="0.1" ShadowDepth="2"/>
+            </Border.Effect>
+
+            <StackPanel>
+                <TextBlock Text="Creează Cont" FontSize="26" FontWeight="Bold" Foreground="{StaticResource PrimaryColor}" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+                <Grid Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Prenume" Foreground="{StaticResource TextColor}" FontWeight="SemiBold"/>
+                        <TextBox Text="{Binding FirstName}" Style="{StaticResource ModernTextBox}"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="Nume" Foreground="{StaticResource TextColor}" FontWeight="SemiBold"/>
+                        <TextBox Text="{Binding LastName}" Style="{StaticResource ModernTextBox}"/>
+                    </StackPanel>
+                </Grid>
+
+                <TextBlock Text="Email" Foreground="{StaticResource TextColor}" FontWeight="SemiBold"/>
+                <TextBox Text="{Binding Email}" Style="{StaticResource ModernTextBox}" Margin="0,0,0,10"/>
+                <TextBlock Text="Telefon" Foreground="{StaticResource TextColor}" FontWeight="SemiBold"/>
+                <TextBox Text="{Binding Phone}" Style="{StaticResource ModernTextBox}" Margin="0,0,0,10"/>
+                <TextBlock Text="Parolă" Foreground="{StaticResource TextColor}" FontWeight="SemiBold"/>
+                <PasswordBox x:Name="PassBox" Style="{StaticResource ModernPasswordBox}" Margin="0,0,0,10" PasswordChanged="OnPasswordChanged"/>
+                <TextBlock Text="Confirmă Parola" Foreground="{StaticResource TextColor}" FontWeight="SemiBold"/>
+                <PasswordBox x:Name="ConfirmPassBox" Style="{StaticResource ModernPasswordBox}" Margin="0,0,0,20" PasswordChanged="OnConfirmPasswordChanged"/>
+
+                <TextBlock Text="{Binding ErrorMessage}" Foreground="{StaticResource ErrorColor}" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0,0,0,10" FontWeight="Bold"/>
+                <TextBlock Text="{Binding SuccessMessage}" Foreground="#27ae60" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0,0,0,10" FontWeight="Bold"/>
+
+                <Button Content="ÎNREGISTRARE" Command="{Binding RegisterCommand}" Style="{StaticResource PrimaryButton}" Margin="0,0,0,15"/>
+
+                <Button Content="Ai deja cont? Loghează-te" Command="{Binding GoToLoginCommand}" Background="Transparent" BorderThickness="0" Foreground="{StaticResource PrimaryColor}" Cursor="Hand">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <TextBlock Text="{TemplateBinding Content}" TextDecorations="Underline" Foreground="{TemplateBinding Foreground}"/>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

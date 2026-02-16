@@ -1,0 +1,107 @@
+﻿<UserControl x:Class="LibraryManagementSystem.Views.BooksView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="White">
+
+    <Grid Margin="30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Margin="0,0,0,20">
+            <TextBlock Text="Biblioteca Digitală" FontSize="28" FontWeight="Bold" Foreground="#2C3E50" VerticalAlignment="Center"/>
+            <Button Content="+ Adaugă Carte" 
+                    Command="{Binding AddBookCommand}" 
+                    Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVis}}"
+                    Style="{StaticResource PrimaryButton}" 
+                    HorizontalAlignment="Right"/>
+        </Grid>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <ItemsControl ItemsSource="{Binding Books}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="0,0,20,20">
+                            <Button Command="{Binding DataContext.OpenDetailsCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                    CommandParameter="{Binding}"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Cursor="Hand">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Width="200" Height="320" Background="White" CornerRadius="10" Margin="5">
+                                            <Border.Effect>
+                                                <DropShadowEffect BlurRadius="15" Opacity="0.1" ShadowDepth="3" Color="Black"/>
+                                            </Border.Effect>
+
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="180"/>
+                                                    <RowDefinition Height="*"/>
+                                                </Grid.RowDefinitions>
+
+                                                <Border Grid.Row="0" CornerRadius="10,10,0,0" ClipToBounds="True" Background="#ECF0F1">
+                                                    <Image Source="{Binding FullImagePath}" Stretch="UniformToFill"/>
+                                                </Border>
+
+                                                <Border Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Right" 
+                                                        Background="#1ABC9C" CornerRadius="0,10,0,10" Padding="8,4" Margin="0">
+                                                    <TextBlock Text="{Binding CategoryName}" Foreground="White" FontSize="10" FontWeight="Bold"/>
+                                                </Border>
+
+                                                <StackPanel Grid.Row="1" Margin="15">
+                                                    <TextBlock Text="{Binding Title}" FontSize="16" FontWeight="Bold" Foreground="#2C3E50" 
+                                                               TextTrimming="CharacterEllipsis" Height="45" TextWrapping="Wrap"/>
+
+                                                    <TextBlock Text="{Binding Author}" FontSize="13" Foreground="#7F8C8D" Margin="0,5,0,0"/>
+
+                                                    <StackPanel Orientation="Horizontal" Margin="0,15,0,0" VerticalAlignment="Bottom">
+                                                        <TextBlock Text="Stoc:" Foreground="Gray" FontSize="12"/>
+                                                        <TextBlock Text="{Binding CurrentStock}" Foreground="#2C3E50" FontWeight="Bold" Margin="5,0,0,0"/>
+                                                    </StackPanel>
+                                                </StackPanel>
+
+                                                <Border x:Name="HoverBorder" Background="Black" Opacity="0" CornerRadius="10" Grid.RowSpan="2"/>
+                                            </Grid>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="HoverBorder" Property="Opacity" Value="0.05"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+
+                            <Button Content="🗑" 
+                                    Command="{Binding DataContext.DeleteBookCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                    CommandParameter="{Binding}"
+                                    Visibility="{Binding DataContext.IsAdmin, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVis}}"
+                                    Width="30" Height="30" 
+                                    Background="#E74C3C" Foreground="White" 
+                                    FontSize="14" FontWeight="Bold"
+                                    HorizontalAlignment="Right" VerticalAlignment="Top" 
+                                    Margin="0,-5,-5,0"
+                                    Cursor="Hand">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}" CornerRadius="15">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

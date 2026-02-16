@@ -1,5 +1,4 @@
-﻿using System.Configuration;
-using System.Windows;
+﻿using System.Windows;
 using LibraryManagementSystem.Services;
 using LibraryManagementSystem.ViewModels;
 using LibraryManagementSystem.Views;
@@ -12,14 +11,19 @@ namespace LibraryManagementSystem
         {
             base.OnStartup(e);
 
-            string connString = ConfigurationManager.ConnectionStrings["LibraryConnection"].ConnectionString;
+            string connectionString = "Host=localhost;Database=LibraryDB;Username=postgres;Password=123456";
 
-            var bookService = new BookService(connString);
-            var mainViewModel = new MainViewModel(bookService);
+            var bookService = new BookService(connectionString);
+            var userService = new UserService(connectionString);
 
-            MainWindow window = new MainWindow();
-            window.DataContext = mainViewModel;
-            window.Show();
+            var mainViewModel = new MainViewModel(bookService, userService, connectionString);
+
+            var mainWindow = new MainWindow
+            {
+                DataContext = mainViewModel
+            };
+
+            mainWindow.Show();
         }
     }
 }

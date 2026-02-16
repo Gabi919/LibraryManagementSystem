@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="LibraryManagementSystem.Views.UserLoansView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="White">
+
+    <Grid Margin="30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Cărțile Mele Împrumutate" FontSize="28" FontWeight="Bold" Foreground="#2C3E50" Margin="0,0,0,20"/>
+
+        <DataGrid Grid.Row="1" ItemsSource="{Binding Loans}" AutoGenerateColumns="False" IsReadOnly="True" 
+                  CanUserAddRows="False" BorderBrush="LightGray" BorderThickness="1" Background="White"
+                  GridLinesVisibility="Horizontal" RowHeight="50">
+
+            <DataGrid.Resources>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="Background" Value="#ECF0F1"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="Padding" Value="10"/>
+                    <Setter Property="Foreground" Value="#2C3E50"/>
+                    <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                    <Setter Property="BorderBrush" Value="LightGray"/>
+                </Style>
+                <Style TargetType="DataGridCell">
+                    <Setter Property="Padding" Value="10"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                </Style>
+            </DataGrid.Resources>
+
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Copertă" Width="60">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding FullImagePath}" Width="30" Height="40" Stretch="UniformToFill"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTextColumn Header="Titlu" Binding="{Binding Title}" Width="*" FontWeight="SemiBold"/>
+                <DataGridTextColumn Header="Autor" Binding="{Binding Author}" Width="150"/>
+
+                <DataGridTextColumn Header="Data Împrumut" Binding="{Binding LoanDate, StringFormat=dd.MM.yyyy}" Width="120"/>
+
+                <DataGridTemplateColumn Header="Dată Returnare (Due)" Width="120">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding DueDate, StringFormat=dd.MM.yyyy}" FontWeight="Bold" Foreground="#E74C3C"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <TextBlock Grid.Row="1" Text="Nu ai niciun împrumut activ." 
+                   FontSize="18" Foreground="Gray" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Visibility="{Binding Loans.Count, Converter={StaticResource BoolToVis}, ConverterParameter=Inverse}"/>
+    </Grid>
+</UserControl>

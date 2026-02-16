@@ -1,0 +1,141 @@
+﻿<UserControl x:Class="LibraryManagementSystem.Views.HomeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="#F5F7FA">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Height="180" Background="{StaticResource PrimaryColor}">
+            <Grid Margin="40,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="Bine ai revenit," Foreground="#BDC3C7" FontSize="16" Margin="0,0,0,5"/>
+                    <TextBlock Text="{Binding UserName, StringFormat='Hello, {0}!'}" Foreground="White" FontSize="36" FontWeight="Bold"/>
+                    <Border Background="#1ABC9C" HorizontalAlignment="Left" CornerRadius="4" Padding="8,2" Margin="0,10,0,0">
+                        <TextBlock Text="{Binding UserRole}" Foreground="White" FontSize="12" FontWeight="SemiBold"/>
+                    </Border>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right">
+                    <TextBlock Text="{Binding CurrentTime}" Foreground="White" FontSize="40" FontWeight="Bold" HorizontalAlignment="Right" Margin="0,0,0,-5"/>
+                    <TextBlock Text="{Binding CurrentDate}" Foreground="#BDC3C7" FontSize="16" HorizontalAlignment="Right" Margin="0,0,0,10"/>
+
+                    <Separator Width="50" Background="#1ABC9C" HorizontalAlignment="Right" Margin="0,0,0,10"/>
+                    <TextBlock Text="Biblioteca Digitală" Foreground="White" FontSize="14" Opacity="0.8" HorizontalAlignment="Right"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="1" Margin="40,-30,40,20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Margin="0,0,0,30">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" Background="White" CornerRadius="10" Height="120">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="15" Opacity="0.1" ShadowDepth="2" Color="Black"/>
+                    </Border.Effect>
+                    <Grid Margin="20">
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="Cărțile Mele" Foreground="Gray" FontSize="14" FontWeight="SemiBold"/>
+                            <TextBlock Text="{Binding ActiveLoansCount}" Foreground="#2C3E50" FontSize="36" FontWeight="Bold"/>
+                        </StackPanel>
+                        <TextBlock Text="📖" FontSize="40" HorizontalAlignment="Right" VerticalAlignment="Center" Opacity="0.2"/>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Column="2" Background="White" CornerRadius="10" Height="120">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="15" Opacity="0.1" ShadowDepth="2" Color="Black"/>
+                    </Border.Effect>
+                    <Grid Margin="20">
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="Total Cărți" Foreground="Gray" FontSize="14" FontWeight="SemiBold"/>
+                            <TextBlock Text="{Binding TotalBooksCount}" Foreground="#2C3E50" FontSize="36" FontWeight="Bold"/>
+                        </StackPanel>
+                        <TextBlock Text="📚" FontSize="40" HorizontalAlignment="Right" VerticalAlignment="Center" Opacity="0.2"/>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Column="4" Background="White" CornerRadius="10" Height="120">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="15" Opacity="0.1" ShadowDepth="2" Color="Black"/>
+                    </Border.Effect>
+                    <Grid Margin="20">
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="Status Cont" Foreground="Gray" FontSize="14" FontWeight="SemiBold"/>
+                            <TextBlock Text="Activ" Foreground="#27ae60" FontSize="30" FontWeight="Bold"/>
+                        </StackPanel>
+                        <TextBlock Text="✅" FontSize="40" HorizontalAlignment="Right" VerticalAlignment="Center" Opacity="0.2"/>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" CornerRadius="10" Margin="0,0,20,0" ClipToBounds="True">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="15" Opacity="0.1" ShadowDepth="2"/>
+                    </Border.Effect>
+
+                    <Border.Background>
+                        <ImageBrush ImageSource="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?q=80&amp;w=2828&amp;auto=format&amp;fit=crop" 
+                                    Stretch="UniformToFill"/>
+                    </Border.Background>
+
+                    <Grid>
+                        <Border Background="Black" Opacity="0.6"/>
+
+                        <TextBlock Text="❝" FontSize="100" Foreground="White" Opacity="0.3" Margin="20,-20,0,0" FontFamily="Georgia"/>
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="50">
+                            <TextBlock Text="{Binding RandomQuote}" 
+                                       FontSize="26" FontStyle="Italic" TextWrapping="Wrap" TextAlignment="Center" 
+                                       Foreground="White" FontFamily="Georgia" FontWeight="Medium">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect ShadowDepth="2" BlurRadius="5" Opacity="0.5"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+
+                            <TextBlock Text="{Binding QuoteAuthor, StringFormat='— {0}'}" 
+                                       FontSize="18" Foreground="#ECF0F1" HorizontalAlignment="Right" Margin="0,20,0,0" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Column="1" Background="#2C3E50" CornerRadius="10">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="15" Opacity="0.2" ShadowDepth="2"/>
+                    </Border.Effect>
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20">
+                        <TextBlock Text="💡" FontSize="40" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                        <TextBlock Text="Știai că?" Foreground="White" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Cititul reduce stresul cu până la 68%, fiind mai eficient decât muzica sau o plimbare." 
+                                   Foreground="#BDC3C7" TextWrapping="Wrap" TextAlignment="Center" Margin="0,10,0,0" LineHeight="22"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

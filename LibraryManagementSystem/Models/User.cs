@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace LibraryManagementSystem.Models
+﻿namespace LibraryManagementSystem.Models
 {
     public class User
     {
@@ -9,11 +7,8 @@ namespace LibraryManagementSystem.Models
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-        public DateTime RegisteredDate { get; set; }
         public int RoleId { get; set; }
 
-        public string RoleName { get; set; }
-
-        public string FullName => $"{FirstName} {LastName}";
+        public bool IsAdmin => RoleId == 1;
     }
 }

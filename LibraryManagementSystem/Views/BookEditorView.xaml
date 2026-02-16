@@ -1,0 +1,108 @@
+﻿<UserControl x:Class="LibraryManagementSystem.Views.BookEditorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="White">
+
+    <Grid Margin="30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="{Binding PageTitle}" FontSize="28" FontWeight="Bold" Foreground="#2C3E50" Margin="0,0,0,20"/>
+
+        <ScrollViewer Grid.Row="1">
+            <Border Background="#F9F9F9" CornerRadius="10" Padding="30" HorizontalAlignment="Left" Width="700">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="200"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                        <TextBlock Text="Titlu Carte" FontWeight="SemiBold" Foreground="#34495E"/>
+                        <TextBox Text="{Binding Title}" Style="{StaticResource ModernTextBox}" Margin="0,5,0,15"/>
+
+                        <TextBlock Text="Autor" FontWeight="SemiBold" Foreground="#34495E"/>
+                        <TextBox Text="{Binding Author}" Style="{StaticResource ModernTextBox}" Margin="0,5,0,15"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="Categorie" FontWeight="SemiBold" Foreground="#34495E"/>
+                                <ComboBox ItemsSource="{Binding Categories}" DisplayMemberPath="CategoryName" SelectedItem="{Binding SelectedCategory}" Height="40" Margin="0,5,0,15"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="An Publicare" FontWeight="SemiBold" Foreground="#34495E"/>
+                                <TextBox Text="{Binding PublishedYear}" Style="{StaticResource ModernTextBox}" Margin="0,5,0,15"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="Editura" FontWeight="SemiBold" Foreground="#34495E"/>
+                                <TextBox Text="{Binding Publisher}" Style="{StaticResource ModernTextBox}" Margin="0,5,0,15"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="ISBN" FontWeight="SemiBold" Foreground="#34495E"/>
+                                <TextBox Text="{Binding Isbn}" Style="{StaticResource ModernTextBox}" Margin="0,5,0,15"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="Stoc Total" FontWeight="SemiBold" Foreground="#34495E"/>
+                                <TextBox Text="{Binding TotalStock}" Style="{StaticResource ModernTextBox}" Margin="0,5,0,15"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="Stoc Curent" FontWeight="SemiBold" Foreground="#34495E"/>
+                                <TextBox Text="{Binding CurrentStock}" Style="{StaticResource ModernTextBox}" Margin="0,5,0,15"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <TextBlock Text="Copertă Carte" FontWeight="SemiBold" Foreground="#34495E"/>
+                        <Grid Margin="0,5,0,20">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0" Text="{Binding CoverImage}" IsReadOnly="True" Style="{StaticResource ModernTextBox}"/>
+                            <Button Grid.Column="2" Command="{Binding SelectImageCommand}" Content="📂 Selectează" Height="40" Padding="15,0" Style="{StaticResource PrimaryButton}"/>
+                        </Grid>
+
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button Content="Anulează" Command="{Binding CancelCommand}" Background="Transparent" Foreground="#E74C3C" BorderThickness="0" Cursor="Hand" Margin="0,0,15,0" FontWeight="Bold"/>
+                            <Button Content="Salvează" Command="{Binding SaveCommand}" Style="{StaticResource PrimaryButton}" Width="150"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" VerticalAlignment="Top">
+                        <TextBlock Text="Previzualizare" FontWeight="Bold" Foreground="#7F8C8D" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                        <Border Background="White" CornerRadius="5" Height="280" BorderBrush="#ECF0F1" BorderThickness="1">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="10" Opacity="0.1"/>
+                            </Border.Effect>
+                            <Image Source="{Binding PreviewImagePath}" Stretch="UniformToFill" Margin="5"/>
+                        </Border>
+                    </StackPanel>
+
+                </Grid>
+            </Border>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
